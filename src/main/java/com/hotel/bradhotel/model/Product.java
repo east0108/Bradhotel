@@ -1,5 +1,7 @@
 package com.hotel.bradhotel.model;
 
+import com.hotel.bradhotel.constant.ProductCategory;
+
 import java.util.Date;
 
 //定義hotel資料庫product資料表內的變數，對應到Java class
@@ -7,7 +9,7 @@ public class Product {
 
    private Integer productId;
    private String productName;
-   private String category;
+   private ProductCategory category;
    private String imageUrl;
    private Integer price;
    private Integer stock;
@@ -31,11 +33,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
