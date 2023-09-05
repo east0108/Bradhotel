@@ -1,6 +1,7 @@
 package com.hotel.bradhotel.service.impl;
 
 import com.hotel.bradhotel.dao.ProductDao;
+import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Integer productId) {
         return productDao.getProductById(productId);
+    }
+
+    @Override
+    public Integer createProduct(ProductRequest productRequest) {
+        return productDao.createProduct(productRequest);
+    }
+
+
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+        productDao.updateProduct(productId, productRequest);
     }
 }

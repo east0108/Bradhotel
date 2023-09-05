@@ -1,12 +1,17 @@
 package com.hotel.bradhotel.dao.impl;
 
 import com.hotel.bradhotel.dao.ProductDao;
+import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +22,7 @@ public class productDaoImpl implements ProductDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Override
+    @Override//對應參數在rowmapper內
     public Product getProductById(Integer productId) {
         String sql = "SElECT product_id, product_name, category, image_url, price, stock, description," +
                 "created_date, last_modified_date " +
@@ -33,8 +38,59 @@ public class productDaoImpl implements ProductDao {
         }else {
             return null;
         }
+    }
+
+    @Override //對應參數在ProductRequest內
+    public Integer createProduct(ProductRequest productRequest) {
+        String sql = "INSERT INTO product(product_name, category, image_url, price, stock, description," +
+                "created_date, last_modified_date) " +
+                "VALUES(:productName, :category, :imageUrl, :price, :stock, :description," +
+                " :createdDate, :lastModifiedDate)";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getCategory().toString());
+        map.put("imageUrl", productRequest.getImageUrl());
+        map.put("price", productRequest.getPrice());
+        map.put("stock", productRequest.getStock());
+        map.put("description", productRequest.getDescription());
+
+        //由程式生成時間，并將時間記錄到created_date與last_modified_date兩個資料庫欄位中
+        Date now = new Date();
+        map.put("createdDate", now);
+        map.put("lastModifiedDate", now);
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        namedParameterJdbcTemplate.update(sql , new MapSqlParameterSource(map), keyHolder);
+
+        int productId = keyHolder.getKey().intValue();
+
+        return productId;
+    }
 
 
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+
+        String sql = "UPDATE product SET product_name = :productName, category = :category, image_url = :imageUrl," +
+                "price= :price, stock= :stock, description= :description," +
+                "last_modified_date= :lastModifiedDate " +
+                "WHERE product_id = :productID";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("productID", productId);
+
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getCategory().toString());
+        map.put("imageUrl", productRequest.getImageUrl());
+        map.put("price", productRequest.getPrice());
+        map.put("stock", productRequest.getStock());
+        map.put("description", productRequest.getDescription());
+
+        map.put("lastModifiedDate", new Date());
+
+        namedParameterJdbcTemplate.update(sql ,map);
 
     }
 }
