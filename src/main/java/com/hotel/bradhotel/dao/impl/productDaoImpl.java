@@ -1,5 +1,6 @@
 package com.hotel.bradhotel.dao.impl;
 
+import com.hotel.bradhotel.constant.ProductCategory;
 import com.hotel.bradhotel.dao.ProductDao;
 import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
@@ -23,12 +24,22 @@ public class productDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory category, String search) {
         String sql = "SElECT product_id, product_name, category, image_url, price, stock, description," +
                 "created_date, last_modified_date " +
-                "FROM product ";
+                "FROM product WHERE 1=1";
 
         Map<String, Object> map = new HashMap<>();
+        //查詢語句一定要去判斷是否為null
+        if (category != null){
+            sql = sql + " AND category = :category";//要預留空白建
+            map.put("category", category.name());//使用enum類型的name方法將enum類型轉換成字串
+        }
+
+        if (search != null){
+            sql = sql + " AND product_name LIKE :search";//要預留空白建
+            map.put("search", "%" + search + "%");//模糊查詢一定要寫在map裡面，不能寫在sql語句
+        }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 

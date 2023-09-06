@@ -1,5 +1,6 @@
 package com.hotel.bradhotel.controller;
 
+import com.hotel.bradhotel.constant.ProductCategory;
 import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.service.ProductService;
@@ -17,10 +18,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProduct(){
+    @GetMapping("/products")//required = false 表示非必要，讓參事表示可選擇
+    public ResponseEntity<List<Product>> getProducts(
+        @RequestParam(required = false)  ProductCategory category,
+        @RequestParam(required = false) String search
+    ){
 
-        List<Product> productList = productService.getProducts();
+        List<Product> productList = productService.getProducts(category,search);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

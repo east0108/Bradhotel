@@ -1,5 +1,6 @@
 package com.hotel.bradhotel.service.impl;
 
+import com.hotel.bradhotel.constant.ProductCategory;
 import com.hotel.bradhotel.dao.ProductDao;
 import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
@@ -16,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory category, String search) {
+        return productDao.getProducts(category, search);
     }
 
     @Override
