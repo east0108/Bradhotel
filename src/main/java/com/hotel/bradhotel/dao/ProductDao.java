@@ -1,6 +1,6 @@
 package com.hotel.bradhotel.dao;
 
-import com.hotel.bradhotel.constant.ProductCategory;
+import com.hotel.bradhotel.dto.ProductQueryParams;
 import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> getProducts(ProductCategory category, String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer productId);
 

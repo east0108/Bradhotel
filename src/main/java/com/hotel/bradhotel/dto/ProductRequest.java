@@ -5,7 +5,7 @@ import com.hotel.bradhotel.constant.ProductCategory;
 import javax.validation.constraints.NotNull;
 
 //DTO data Transfer Object
-//負責前端傳遞參數轉換，負責裝雜項
+//裝雜項用，負責前端傳遞參數轉換，
 public class ProductRequest {
 
     //只留前端要傳遞的參數，多餘的刪除

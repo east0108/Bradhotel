@@ -1,6 +1,7 @@
 package com.hotel.bradhotel.controller;
 
 import com.hotel.bradhotel.constant.ProductCategory;
+import com.hotel.bradhotel.dto.ProductQueryParams;
 import com.hotel.bradhotel.dto.ProductRequest;
 import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.service.ProductService;
@@ -24,7 +25,11 @@ public class ProductController {
         @RequestParam(required = false) String search
     ){
 
-        List<Product> productList = productService.getProducts(category,search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
