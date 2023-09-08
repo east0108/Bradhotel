@@ -1,6 +1,7 @@
 package com.hotel.bradhotel.service.impl;
 
 import com.hotel.bradhotel.dao.UserDao;
+import com.hotel.bradhotel.dto.UserLoginRequest;
 import com.hotel.bradhotel.dto.UserRegisterRequest;
 import com.hotel.bradhotel.model.User;
 import com.hotel.bradhotel.service.UserService;
@@ -36,5 +37,25 @@ public class UserServiceImpl implements UserService {
 
       //創建註冊的帳號
         return userDao.createUser(userRegisterRequest);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if (user == null){
+            log.warn("該email {} 未被註冊", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }else {
+            log.warn("該email {} 密碼不正確", userLoginRequest.getEmail());
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 }
