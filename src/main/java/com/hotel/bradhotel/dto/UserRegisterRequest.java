@@ -1,10 +1,12 @@
 package com.hotel.bradhotel.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
+//接住前端requestbody的參數
 public class UserRegisterRequest {
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank

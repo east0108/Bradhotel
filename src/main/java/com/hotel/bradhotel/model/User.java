@@ -1,10 +1,17 @@
 package com.hotel.bradhotel.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class User {
    private Integer userId;
+
+//   @JsonProperty("e_amil")//在回傳給前端時，改變key的名子
    private String email;
+
+   @JsonIgnore //在回傳給前端時，要忽略該變數(隱藏變數)
    private String password;
    private Date createDated;
    private Date lastModifiedDate;
