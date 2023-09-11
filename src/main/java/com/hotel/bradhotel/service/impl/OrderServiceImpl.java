@@ -4,6 +4,7 @@ import com.hotel.bradhotel.dao.OrderDao;
 import com.hotel.bradhotel.dao.ProductDao;
 import com.hotel.bradhotel.dto.BuyItem;
 import com.hotel.bradhotel.dto.CreateOrderRequest;
+import com.hotel.bradhotel.model.Order;
 import com.hotel.bradhotel.model.OrderItem;
 import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.service.OrderService;
@@ -22,6 +23,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+
+        return order;
+    }
 
     @Transactional
     @Override
