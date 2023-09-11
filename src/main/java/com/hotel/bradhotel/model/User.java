@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+//定義hotel資料庫user資料表內的變數，對應到Java class
 public class User {
    private Integer userId;
 
