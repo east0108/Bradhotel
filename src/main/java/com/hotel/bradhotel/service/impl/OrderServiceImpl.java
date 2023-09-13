@@ -5,6 +5,7 @@ import com.hotel.bradhotel.dao.ProductDao;
 import com.hotel.bradhotel.dao.UserDao;
 import com.hotel.bradhotel.dto.BuyItem;
 import com.hotel.bradhotel.dto.CreateOrderRequest;
+import com.hotel.bradhotel.dto.OrderQueryParams;
 import com.hotel.bradhotel.model.Order;
 import com.hotel.bradhotel.model.OrderItem;
 import com.hotel.bradhotel.model.Product;
@@ -34,6 +35,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserDao userDao;
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        return orderDao.countOrder(orderQueryParams);
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+      List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+      for (Order order : orderList){
+          List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(order.getOrderId());
+
+          order.setOrderItemList(orderItemList);
+      }
+
+
+        return orderList;
+    }
 
     @Override
     public Order getOrderById(Integer orderId) {
