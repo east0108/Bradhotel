@@ -12,4 +12,9 @@ public class view {
     public String home(){
         return "index";
     }
+
+    @GetMapping("/search")
+    public String search(){
+        return "search";
+    }
 }

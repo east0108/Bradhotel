@@ -68,3 +68,11 @@
     
 })(jQuery);
 
+function searchAll(){
+    setCookie("city","",365)
+    document.location.href ="http://localhost:8080/search";
+    datalist();
+
+}
+
+

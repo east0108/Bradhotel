@@ -25,7 +25,7 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
-    @GetMapping("/tour")//required = false 表示非必要，讓參事表示可選擇
+    @GetMapping("/tours")//required = false 表示非必要，讓參事表示可選擇
     public ResponseEntity<Page<Tour>> getTours(
             //查詢條件 Filtering
             @RequestParam(required = false) TourCity city,
@@ -36,7 +36,7 @@ public class TourController {
             @RequestParam(defaultValue = "desc") String sort,
 
             //分頁 Pagination
-            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "9") @Max(1000) @Min(0) Integer limit,
             @RequestParam(defaultValue = "0") @Min(0) Integer offset
             ){
         TourQuerParams tourQuerParams = new TourQuerParams();
