@@ -36,7 +36,7 @@ public class TourController {
             @RequestParam(defaultValue = "desc") String sort,
 
             //分頁 Pagination
-            @RequestParam(defaultValue = "9") @Max(1000) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "6") @Max(1000) @Min(0) Integer limit,
             @RequestParam(defaultValue = "0") @Min(0) Integer offset
             ){
         TourQuerParams tourQuerParams = new TourQuerParams();

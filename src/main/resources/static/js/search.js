@@ -2,6 +2,7 @@ var city = "";
 var limit;
 var cookies;
 var pages;
+var listPage=1;
 //設置Cookie
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -25,6 +26,8 @@ function getCookie(cname) {
     }
     return "";
 }
+
+
 
 //按下搜尋按鈕時觸發的行為
 $("#search").click(function (){
@@ -61,7 +64,7 @@ function datalist() {
             console.log(data);
 
             Info(data);
-            // setPage(Math.ceil(data.total / data.limit))
+            setPage(Math.ceil(data.total / data.limit))
         }
 
     });
@@ -74,6 +77,7 @@ function Info(data){
     var result = data.results;
 
     console.log(result);
+
 
     // var html=`
     //         <div  class="col-lg-4 col-md-6 mb-4">
@@ -132,3 +136,75 @@ function Info(data){
 
 }
 
+
+//畫面呈現出頁碼
+function setPage(pageCount) {
+    //var pageCount = data.pageCount;
+    var pageHtml = '';
+    var start, end;
+    if (listPage < 6) {
+        start = 1;
+    } else {
+        start = listPage - 5;
+    }
+    if (listPage > pageCount - 5) {
+        end = pageCount;
+    } else {
+        end = listPage + 5;
+    }
+
+    if (listPage > 1) {
+        pageHtml += '<span>上一頁</span>';
+    }
+    for (var i = start, page_cur = ''; i <= end; i++) {
+        if (listPage == i) {
+            page_cur = 'page_cur active';
+        } else {
+            page_cur = '';
+        }
+        pageHtml += '<span class="' + page_cur + '">' + i + '</span>';
+    }
+    if (listPage < pageCount) {
+        pageHtml += '<span>下一頁</span>';
+    }
+    $('.page_show').empty().append(pageHtml);
+}
+
+
+//切換頁面
+$('body').on('click', '.page_show span', function () {
+    var $this = $(this);
+    if ($this.hasClass('page_cur')) {
+        return;
+    }
+    var page = $this.html();
+    if (page == '上一頁') {
+        listPage = listPage - 1;
+        changePage(listPage);
+    } else if (page == '下一頁') {
+        listPage = listPage + 1;
+        changePage(listPage);
+    } else {
+        listPage = parseInt(page);
+        changePage(listPage);
+    }
+    //根據頁碼獲取當前頁列表數據
+    setPage(pages)
+});
+
+var listPage = 1;
+
+function changePage(page) {
+    var offset = limit * (page - 1);
+
+    $.ajax({
+        type: "GET",
+        url: url + "&offset=" + offset,
+        success: function (data) {
+            Info(data);
+        },
+        error: () => {
+            document.location.href = "http://localhost:8080/travel/NO"
+        }
+    })
+}
