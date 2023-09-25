@@ -1,5 +1,6 @@
 var city = "";
 var limit;
+var cookies;
 var pages;
 //設置Cookie
 function setCookie(cname, cvalue, exdays) {
@@ -25,9 +26,17 @@ function getCookie(cname) {
     return "";
 }
 
+//按下搜尋按鈕時觸發的行為
+$("#search").click(function (){
 
-var cookies;
+    //
+    setCookie("city" , $("#tourCity").val() , 365 );
 
+    document.location.href = "http://localhost:8080/search";
+
+    datalist();
+
+});
 
 //全部+搜尋
 var url = "http://localhost:8080/tours/?";
