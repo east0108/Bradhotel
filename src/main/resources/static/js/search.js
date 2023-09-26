@@ -2,7 +2,7 @@ var city = "";
 var limit;
 var cookies;
 var pages;
-var listPage=1;
+
 //設置Cookie
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -71,10 +71,92 @@ function datalist() {
 
 }
 
+
+//畫面呈現出頁碼
+function setPage(pageCount) {
+    //var pageCount = data.pageCount;
+    var pageHtml = '';
+    var start, end;
+    if (listPage < 6) {
+        start = 1;
+    } else {
+        start = listPage - 5;
+    }
+    if (listPage > pageCount - 5) {
+        end = pageCount;
+    } else {
+        end = listPage + 5;
+    }
+
+    if (listPage > 1) {
+        pageHtml += '<span>上一頁</span>';
+    }
+    for (var i = start, page_cur = ''; i <= end; i++) {
+        if (listPage == i) {
+            page_cur = 'page_cur active';
+        } else {
+            page_cur = '';
+        }
+        pageHtml += '<span class="' + page_cur + '">' + i + '</span>';
+    }
+    if (listPage < pageCount) {
+        pageHtml += '<span>下一頁</span>';
+    }
+    $('.page_show').empty().append(pageHtml);
+}
+
+
+//切換頁面
+$('body').on('click', '.page_show span', function () {
+    var $this = $(this);
+    if ($this.hasClass('page_cur')) {
+        return;
+    }
+    var page = $this.html();
+    if (page == '上一頁') {
+        listPage = listPage - 1;
+        changePage(listPage);
+    } else if (page == '下一頁') {
+        listPage = listPage + 1;
+        changePage(listPage);
+    } else {
+        listPage = parseInt(page);
+        changePage(listPage);
+    }
+
+
+
+    //根據頁碼獲取當前頁列表數據
+    setPage(pages)
+});
+
+var listPage=1;
+
+function changePage(page) {
+    var offset = limit * (page - 1);
+
+    console.log(url);
+    //limit已由後端設定，故在傳URL時不需要再設定limit
+    $.ajax({
+        type: "GET",
+        url: url + "&offset=" + offset,
+        success: function (data) {
+
+
+            //依據offset可以得到該頁面的資料
+            Info(data);
+        }
+
+    })
+}
+
+
 function Info(data){
     $("#dataList").empty();
-
+    //商品資料
     var result = data.results;
+    limit = data.limit;
+    pages = Math.ceil(data.total / data.limit);
 
     console.log(result);
 
@@ -134,77 +216,4 @@ function Info(data){
         $("#dataList").append(html);
     })
 
-}
-
-
-//畫面呈現出頁碼
-function setPage(pageCount) {
-    //var pageCount = data.pageCount;
-    var pageHtml = '';
-    var start, end;
-    if (listPage < 6) {
-        start = 1;
-    } else {
-        start = listPage - 5;
-    }
-    if (listPage > pageCount - 5) {
-        end = pageCount;
-    } else {
-        end = listPage + 5;
-    }
-
-    if (listPage > 1) {
-        pageHtml += '<span>上一頁</span>';
-    }
-    for (var i = start, page_cur = ''; i <= end; i++) {
-        if (listPage == i) {
-            page_cur = 'page_cur active';
-        } else {
-            page_cur = '';
-        }
-        pageHtml += '<span class="' + page_cur + '">' + i + '</span>';
-    }
-    if (listPage < pageCount) {
-        pageHtml += '<span>下一頁</span>';
-    }
-    $('.page_show').empty().append(pageHtml);
-}
-
-
-//切換頁面
-$('body').on('click', '.page_show span', function () {
-    var $this = $(this);
-    if ($this.hasClass('page_cur')) {
-        return;
-    }
-    var page = $this.html();
-    if (page == '上一頁') {
-        listPage = listPage - 1;
-        changePage(listPage);
-    } else if (page == '下一頁') {
-        listPage = listPage + 1;
-        changePage(listPage);
-    } else {
-        listPage = parseInt(page);
-        changePage(listPage);
-    }
-    //根據頁碼獲取當前頁列表數據
-    setPage(pages)
-});
-
-var listPage = 1;
-
-function changePage(page) {
-    var offset = limit * (page - 1);
-
-    $.ajax({
-        type: "GET",
-        url: url + "&offset=" + offset,
-        success: function (data) {
-            Info(data);
-        },
-        error: () => {
-            document.location.href = "http://localhost:8080/travel/NO"
-        }
-    })
 }
