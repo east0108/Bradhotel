@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
 
-@Component
+@Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -24,6 +27,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User getUserByEmail(UserRegisterRequest userRegisterRequest) {
+
+        User user = userDao.getUserByEmail(userRegisterRequest.getEmail());
+
+        if(user != null){
+            log.warn("該email {} 已經被註冊", userRegisterRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        log.warn("該email {} 尚未被註冊",userRegisterRequest.getEmail());
+
+        return userDao.getUserByEmail(userRegisterRequest.getEmail());
     }
 
     @Override

@@ -1,14 +1,14 @@
 package com.hotel.bradhotel.service.impl;
 
 import com.hotel.bradhotel.dao.OrderDao;
-import com.hotel.bradhotel.dao.ProductDao;
+import com.hotel.bradhotel.dao.TourDao;
 import com.hotel.bradhotel.dao.UserDao;
 import com.hotel.bradhotel.dto.BuyItem;
 import com.hotel.bradhotel.dto.CreateOrderRequest;
 import com.hotel.bradhotel.dto.OrderQueryParams;
 import com.hotel.bradhotel.model.Order;
 import com.hotel.bradhotel.model.OrderItem;
-import com.hotel.bradhotel.model.Product;
+import com.hotel.bradhotel.model.Tour;
 import com.hotel.bradhotel.model.User;
 import com.hotel.bradhotel.service.OrderService;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Autowired
-    private ProductDao productDao;
+    private TourDao tourDao;
 
     @Autowired
     private UserDao userDao;
@@ -83,25 +83,25 @@ public class OrderServiceImpl implements OrderService {
 
 
         for (BuyItem buyItem : createOrderRequest.getBuyItemList()){
-            Product product = productDao.getProductById(buyItem.getProductId());
+            Tour tour = tourDao.getTourById(buyItem.getProductId());
 
             //檢查 product是否存在，庫存是否足夠
-            if(product ==null){
+            if(tour ==null){
                 log.warn("該商品 {} 不存在",buyItem.getProductId());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-            }else if(product.getStock() < buyItem.getQuantity() ){
+            }else if(tour.getStocks() < buyItem.getQuantity() ){
                 log.warn("商品 {} 庫存數量不足，無法購買，剩餘庫存 {} ，欲購買數量 {}",
-                        buyItem.getProductId(),product.getStock(),buyItem.getQuantity());
+                        buyItem.getProductId(),tour.getStocks(),buyItem.getQuantity());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
 
             //扣除庫存
-            productDao.updateStock(product.getProductId(),product.getStock()-buyItem.getQuantity());
+            tourDao.updateStock(tour.getProductId(),tour.getStocks()-buyItem.getQuantity());
 
 
 
             // 計算訂單總價錢
-            int amoount = buyItem.getQuantity() * product.getPrice();
+            int amoount = buyItem.getQuantity() * tour.getTickets();
             totalAmount = totalAmount + amoount;
 
             //轉換BuyItem to OrderItem

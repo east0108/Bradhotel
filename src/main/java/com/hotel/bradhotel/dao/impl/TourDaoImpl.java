@@ -1,12 +1,9 @@
 package com.hotel.bradhotel.dao.impl;
 
 import com.hotel.bradhotel.dao.TourDao;
-import com.hotel.bradhotel.dto.ProductQueryParams;
 import com.hotel.bradhotel.dto.TourQuerParams;
 import com.hotel.bradhotel.dto.TourRequest;
-import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.model.Tour;
-import com.hotel.bradhotel.rowmapper.ProductRowMapper;
 import com.hotel.bradhotel.rowmapper.TourRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -134,6 +131,19 @@ public class TourDaoImpl implements TourDao {
         map.put("stock", tourRequest.getStock());
         map.put("introduce", tourRequest.getIntroduce());
 
+        map.put("lastModifiedDate", new Date());
+
+        namedParameterJdbcTemplate.update(sql ,map);
+    }
+
+    @Override
+    public void updateStock(Integer productId, Integer stock) {
+        String sql = "UPDATE tour SET  stock= :stock, last_modified_date= :lastModifiedDate " +
+                "WHERE product_id = :productID";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("productID", productId);
+        map.put("stock", stock);
         map.put("lastModifiedDate", new Date());
 
         namedParameterJdbcTemplate.update(sql ,map);
