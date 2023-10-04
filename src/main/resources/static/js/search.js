@@ -35,14 +35,14 @@ $("#search").click(function (){
     //
     setCookie("city" , $("#tourCity").val() , 365 );
 
-    document.location.href = "http://localhost:8080/search";
+    document.location.href = "http://localhost:8080/tour/search";
 
     datalist();
 
 });
 
 //全部+搜尋
-var url = "http://localhost:8080/tours/?";
+var url = "http://localhost:8080/tour/tours?";
 function datalist() {
 
     //從Cookie中 尋找city的Value值後進行搜尋

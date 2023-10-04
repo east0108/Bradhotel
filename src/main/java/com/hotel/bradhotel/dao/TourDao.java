@@ -18,5 +18,7 @@ public interface TourDao {
 
     void updateTour(Integer productId,TourRequest tourRequest);
 
+    void updateStock(Integer productId, Integer stock);
+
     void deleteTourById(Integer productId);
 }

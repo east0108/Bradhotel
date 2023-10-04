@@ -3,7 +3,6 @@ package com.hotel.bradhotel.controller;
 import com.hotel.bradhotel.constant.TourCity;
 import com.hotel.bradhotel.dto.TourQuerParams;
 import com.hotel.bradhotel.dto.TourRequest;
-import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.model.Tour;
 import com.hotel.bradhotel.service.TourService;
 import com.hotel.bradhotel.util.Page;

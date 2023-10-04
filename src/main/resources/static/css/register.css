@@ -1,0 +1,106 @@
+.title-block {
+    color: #444;
+    font-size: 64px;
+    text-align: center;
+
+    margin: calc(100vh * 0.04) auto 0;
+}
+
+.form-block {
+    width: 100%;
+
+    margin-bottom: 64px;
+}
+
+.form-block .register-form {
+    width: 320px;
+
+    margin: 64px auto 0;
+}
+
+.form-block .register-form .form-input-block .input-label {
+    color: black;
+    font-size: 25px;
+    
+    margin-top: 32px;
+}
+
+.form-block .register-form .form-input-block .input-area {
+    width: 100%;
+    height: 48px;
+    background-color: #FFF;
+    border: 1px solid #777;
+
+    display: flex;
+
+    margin-top: 8px;
+}
+
+.form-block .register-form .form-input-block .input-area .input-img {
+    width: 32px;
+    height: 32px;
+
+    margin: 8px;
+}
+
+.form-block .register-form .form-input-block .input-area .input-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.form-block .register-form .form-input-block .input-area input {
+    width: calc(100% - 56px);
+    font-size: 16px;
+}
+
+.form-block  button {
+    width: 320px;
+    height: 48px;
+    background-color: #444;
+    border: 1px solid #444;
+    border-radius: 4px;
+
+    color: #FFF;
+    font-size: 18px;
+    text-align: center;
+
+    cursor: pointer;
+    margin: calc(100vh * 0.04) auto 0;
+    margin: 64px auto 0;    
+    margin-top: 64px;
+}
+
+.form-block  button:hover {
+    background-color: #000;
+    border: 1px solid #000;
+}
+
+.form-block .register-form .form-link {
+    font-size: 25px;
+    font-weight: 600;
+
+    text-align: center;
+    margin-top: 24px;
+}
+
+.form-block .register-form .form-link span {
+    color: black;
+}
+
+.form-block .register-form .form-link a {
+    color: #CA0000;
+
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 416px) {
+    .title-block {
+        font-size: 48px;
+    }
+    
+
+    .form-block .register-form {
+        width: 80%;
+        max-width: 320px;
+    }
+}

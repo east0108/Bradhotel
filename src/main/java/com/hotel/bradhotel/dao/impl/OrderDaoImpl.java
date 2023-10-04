@@ -4,10 +4,8 @@ import com.hotel.bradhotel.dao.OrderDao;
 import com.hotel.bradhotel.dto.OrderQueryParams;
 import com.hotel.bradhotel.model.Order;
 import com.hotel.bradhotel.model.OrderItem;
-import com.hotel.bradhotel.model.Product;
 import com.hotel.bradhotel.rowmapper.OrderItemRowMapper;
 import com.hotel.bradhotel.rowmapper.OrderRowMapper;
-import com.hotel.bradhotel.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -82,9 +80,9 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<OrderItem> getOrderItemByOrderId(Integer orderId) {
-        String sql = "SElECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url "
+        String sql = "SElECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.tour_name, p.image_url "
                 +"FROM order_item as oi " +
-                "LEFT JOIN product as p ON oi.product_id = p.product_id " +
+                "LEFT JOIN tour as p ON oi.product_id = p.product_id " +
                 "WHERE oi.order_id = :orderId";
 
         Map<String, Object> map = new HashMap<>();
