@@ -7,7 +7,7 @@ public class OrderItem {
     private Integer quantity;
     private Integer amount;
 
-    private String productName;
+    private String tourName;
     private String imageUrl;
 
     public Integer getOrderItemId() {
@@ -50,13 +50,14 @@ public class OrderItem {
         this.amount = amount;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getTourName() {
+        return tourName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
     }
+
 
     public String getImageUrl() {
         return imageUrl;

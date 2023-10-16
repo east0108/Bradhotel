@@ -1,0 +1,6 @@
+.shopping-cart {
+    position: fixed;
+    bottom: 400px;
+    right: 20px;
+    z-index: 999;
+}

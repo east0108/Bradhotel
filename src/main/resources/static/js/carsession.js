@@ -9,7 +9,7 @@ function displayCart() {
             + "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" + cartArray[i].name + ">-</button>"
             + "<input type='number' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
             + "<button class='plus-item btn btn-primary input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
-            + "<td><button id='' class='delete-item btn btn-danger' data-name=" + cartArray[i].name + "   >X</button></td>"
+            + "<td><button id='' class='delete-item' data-name=" + cartArray[i].name + "   >X</button></td>"
             + " = "
             + "<td>" + cartArray[i].total + "</td>"
             + "</tr>";
@@ -67,10 +67,11 @@ $('.clear-cart').click(function() {
 });
 
 displayCart();
-myFunction(cartArray);
+
+
 //要丟，使用者的ID，跟我所購買商品的編號和數量
 
-function myFunction(traveldata) {
+function myFunction(shopdata) {
 
 
 
@@ -78,16 +79,17 @@ function myFunction(traveldata) {
 
 
     $.ajax({
-        url: "http://localhost:8080/travel/index/checklogin",
+        url: "http://localhost:8080/tour/home/checklogin",
         async:false,
-        success:function(data) {
+        success:function(backstagedata) {
+
+            // console.log(data)
 
 
 
 
 
-
-            clickEmailandCreateOrder(data,traveldata);
+            clickEmailandCreateOrder(backstagedata,shopdata);
 
 
 
@@ -96,7 +98,7 @@ function myFunction(traveldata) {
 
 
         },error:function (){
-            document.location.href = "http://localhost:8080/travel/login";
+            document.location.href = "http://localhost:8080/tour/login";
         }
     });
 
@@ -129,51 +131,44 @@ function myFunction(traveldata) {
 
 
 
-function clickEmailandCreateOrder(data,traveldata) {
+function clickEmailandCreateOrder(backstagedata,shopdata) {
 
-    var createOrderRequest ={
+    console.log(shopdata);
+    console.log(backstagedata);
+
+
+
+    var createOrderRequest = {
         "buyItemList": []
     }
-    for(i=0;i<traveldata.length;i++){
-        var OrderRequest ={
-            "productId":traveldata[i].id,
-            "quantity":traveldata[i].count
+    for (i=0;i<shopdata.length;i++){
+        var OrderRequest= {
+            "productId": shopdata[i].id,
+            "quantity":shopdata[i].count
         }
         createOrderRequest.buyItemList.push(OrderRequest)
+
     }
 
     console.log(createOrderRequest);
-
-
-
-    var createOrderRequest ={
-        "buyItemList": []
-    }
-    for(i=0;i<traveldata.length;i++){
-        var OrderRequest ={
-            "productId":traveldata[i].id,
-            "quantity":traveldata[i].count
-        }
-        createOrderRequest.buyItemList.push(OrderRequest)
-    }
-    console.log(createOrderRequest);
+    var id = backstagedata.userId.toString();
+    var url ="http://localhost:8080/tour/users/" + id +"/orders"
 
     $.ajax({
-        url: "http://localhost:8080/travel/user/" + data.email + "/orderitem",
+        url: url,
         type: "POST",
         dataType : 'json',
         contentType: "application/json ; charset=utf-8",
         data: JSON.stringify(createOrderRequest),
 
-        success:function(data) {
+        success:function() {
             //var a = document.getElementById("travelvalue").innerHTML
             // var a = $("#travelvalue+span");
             shoppingCart.clearCart();
 
-            console.log(data);
-            mypay(data);
+            alert("訂購成功");
 
-
+            document.location.href = "http://localhost:8080/tour/search";
 
 
 
@@ -187,19 +182,19 @@ function clickEmailandCreateOrder(data,traveldata) {
 
 
 
-function mypay(data){
-    var i ={"orderId":data.orderId};
-
-    console.log(data);
-    $.ajax({
-        type:"POST",
-        contentType: "application/json",
-        url: "http://localhost:8080/travel/pay",
-        data: JSON.stringify(i),
-
-        success:function(data) {
-            $('#tt').html(data);
-        }
-    });
-
-}
+// function mypay(data){
+//     var i ={"orderId":data.orderId};
+//
+//     console.log(data);
+//     $.ajax({
+//         type:"POST",
+//         contentType: "application/json",
+//         url: "http://localhost:8080/tour/pay",
+//         data: JSON.stringify(i),
+//
+//         success:function(data) {
+//             $('#tt').html(data);
+//         }
+//     });
+//
+// }
