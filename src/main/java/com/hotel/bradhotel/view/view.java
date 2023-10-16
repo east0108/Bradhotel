@@ -27,5 +27,10 @@ public class view {
         return "register";
     }
 
+    @GetMapping("/orderhistory")
+    public String orderhistory(){
+        return "orderhistory";
+    }
+
 
 }

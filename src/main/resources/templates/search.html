@@ -23,8 +23,10 @@
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/search.css" rel="stylesheet">
+
 
 </head>
 
@@ -88,6 +90,39 @@
     </div>
     <!-- Navbar End -->
 
+    <!-- 購物車_Modal -->
+    <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">購物車</h5>
+
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="show-cart table">
+
+                    </table>
+                    <div>總額: NT<span class="total-cart"></span></div>
+
+                </div>
+                <div class="modal-footer">
+                    <div><button class="clear-cart btn btn-danger">清除購物車</button></div>
+                    <button onclick="myFunction(cartArray)" type="button" class="btn btn-primary">立即下定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 購物車按鈕 -->
+    <a><button  type="button" class="btn btn-primary rounded-pill shopping-cart" style="margin-top: 15px;" data-bs-toggle="modal"
+                data-bs-target="#cart"><i class="bi bi-cart4 fa-lg"></i> <span class="total-count"></span></button></a>
+
+
 
     <!-- Carousel Start -->
     <div class="container-fluid p-0">
@@ -102,7 +137,7 @@
                             <div  >
                                 <input  id="tourCity" class="border-0 rounded-pill w-100 py-3 ps-4 pe-5" style="margin-top: 7px;"
                                         placeholder="   請輸入想要搜尋的城市">
-                                <button id="search" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2"
+                                <button id="search" class="btn btn-primary rounded-pill py-2 px-4 position-absolute  me-auto-0"
                                         style="margin-top: 15px;">搜尋</button>
 
                             </div>
@@ -268,8 +303,12 @@
 <!-- Template Javascript -->
 <script src="js/loginsession.js"></script>
 <script src="js/main.js"></script>
-<script src="js/search.js"></script>
 
+<script src="js/shopcar.js"></script>
+
+<script src="js/carsession.js"></script>
+
+<script src="js/search.js"></script>
 <script>
     datalist();
 

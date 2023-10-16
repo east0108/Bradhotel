@@ -9770,6 +9770,66 @@ h6,
 }
 
 
+/* 自己新增的CSS */
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.infoImg {
+  position: relative;
+}
+
+.flex-container img {
+  display: block;
+  border-radius: 30px;
+  height: 300px;
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.infoImg img:hover {
+  transform: scale(1.1);
+  -webkit-transition: 500ms;
+  opacity: 1;
+}
+
+.info p {
+  position: absolute;
+  bottom: 18px;
+  left: 28px;
+  color: rgb(255, 255, 255);
+  font-size: 50px;
+}
+
+.info:hover {
+  -webkit-transition: 500ms;
+  opacity: 1;
+}
+
+
+#button-travel {
+  background-color: white;
+  border: 2px solid #4CAF50;
+  border-radius: 30px;
+  padding: 10px 100px;
+  font-size: 20px;
+  text-align: center !important;
+  text-decoration: none;
+  display: inline-block;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+#button-travel:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
 
 
 
@@ -9804,4 +9864,8 @@ h6,
   bottom: 400px;
   right: 20px;
   z-index: 999;
+}
+
+.table td {
+  border-top: none; /* 移除上边框 */
 }

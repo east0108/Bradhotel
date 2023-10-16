@@ -191,19 +191,21 @@ function Info(data){
         html = `
         <div  class="col-lg-4 col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="
-                            ${item.imageUrl}" alt="">
+                        <img id="image1" class="img-fluid" src="
+                            ${item.imageUrl}" alt="" data-bs-target="#exampleModal${item.productId}">
                         <div class="p-4">
                             <div class="d-flex justify-content-between mb-3">
                                 <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>${item.city}</small>
                                 <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>${item.tourName}</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>${item.address}</small>
+                                <small class="m-0"><i class="fa fa-money text-primary mr-2"></i>NT$ ${item.tickets}</small>
                             </div>
 
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h5 class="m-0">$${item.tickets}</h5>
+                                    <h5 data-id=${item.productId} data-name=${item.tourName} data-price=${item.tickets}
+                                    class="add-to-cart btn btn-primary ">加入購物車</h5>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -215,5 +217,17 @@ function Info(data){
 
         $("#dataList").append(html);
     })
+
+
+    $('.add-to-cart').click(function (event){
+        event.preventDefault();//阻止購物出彈出來
+        var name = $(this).data('name');
+        var price = Number($(this).data('price'))
+        var id = $(this).data('id')
+
+        shoppingCart.addItemToCart(name,price,1,id);
+        displayCart();
+    });
+    displayCart();
 
 }
